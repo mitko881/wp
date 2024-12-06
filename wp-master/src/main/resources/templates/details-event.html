@@ -1,0 +1,65 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Event Details</title>
+    <style type="text/css">
+        body {
+            width: 800px;
+            margin: auto;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        table, td, th {
+            border: 1px solid black;
+            padding: 3px 2px;
+        }
+    </style>
+</head>
+<body>
+<section>
+    <header>
+        <h1>Event Details</h1>
+    </header>
+    <table>
+        <tr>
+            <th colspan="2">
+                Event status
+            </th>
+        </tr>
+        <tr>
+            <td><b>Event Name</b></td>
+            <td th:text="${event.getName()}">Petko Petkov</td>
+        </tr>
+        <tr>
+            <td><b>Event Location</b></td>
+            <td th:text="${event.getLocation()}">127.0.0.1</td>
+        </tr>
+        <tr>
+            <td><b>Event Description</b></td>
+            <td th:text="${event.getDescription()}">Oppenheimer</td>
+        </tr>
+        <tr>
+            <td><b>Popularity score</b></td>
+            <td th:text="${event.getPopularityScore()}">2</td>
+        </tr>
+    </table>
+    <div>
+        <span>Current event bookings:</span>
+        <ul>
+            <li th:each="booking : ${bookings}">
+                <label>
+                    Attendee Name: <span th:text="${booking.getAttendeeName()}"></span>
+                    Attendee Address: <span th:text="${booking.getAttendeeAddress()}"></span>
+                    Number of tickets: <span th:text="${booking.getNumberOfTickets()}"></span>
+                </label>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<a href="/events">Back to events</a>
+</body>
+</html>

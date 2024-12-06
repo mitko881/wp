@@ -1,0 +1,81 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Event Booking page - Welcome and choose an Event</title>
+    <style type="text/css">
+        body {
+            width: 1000px;
+            margin: auto;
+        }
+
+        .text-danger {
+            color: red;
+        }
+        .b{
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Welcome to our Event Booking App</h1>
+</header>
+<main>
+    <th:block th:if="${hasError}">
+        <div th:text="${error}" class="text-danger"></div>
+    </th:block>
+
+    <h2>Filter Events:</h2>
+    <label for="filterText">Filter by name or description:</label>
+    <input type="text" id="filterText" name="filterText">
+
+    <label for="minRating">Minimum Rating:</label>
+    <input type="number" id="minRating" name="minRating" min="0" max="5" step="0.1">
+
+    <br>
+    <input type="submit" name="action" value="Filter">
+    <input type="submit" name="action" value="Reset">
+
+    <br>
+    <br>
+
+    <form th:action="@{'/events/add'}" th:method="GET">
+        <button type="submit">ADD NEW EVENT</button>
+    </form>
+
+    <form th:action="@{'/eventBooking'}" th:method="GET">
+        <h2>Enter your full name:</h2>
+        <input type="text" name="attendeeName">
+
+
+        <button type="submit">MAKE RESERVATION</button>
+        <input type="number" name="numTickets" min="1" max="10" placeholder="1">
+        <h2>Event list:</h2>
+        <ul>
+            <li th:each="event : ${events}">
+                <label>
+                    <input type="radio" name="event" th:value="${event.getId()}">
+                    Name: <span th:text="${event.getName()}"></span>,
+                    Description: <span th:text="${event.getDescription()}"></span>
+                    Rating: <span th:text="${event.getPopularityScore()}"></span>
+                    Location: <span th:text="${event.getLocation()}"></span>
+                </label>
+                <br>
+
+                <form class="b" th:action="@{'/events/edit/{id}' (id=${event.getId()})}" th:method="GET">
+                    <button type="submit">Edit</button>
+                </form>
+
+                <form class="b" th:action="@{'/events/delete/{id}' (id=${event.getId()})}" th:method="POST">
+                    <button type="submit">Delete</button>
+                </form>
+
+                <form class="b" th:action="@{'/events/details/{id}' (id=${event.getId()})}" th:method="GET">
+                    <button type="submit">Details</button>
+                </form>
+            </li>
+        </ul>
+    </form>
+</main>
+</body>
+</html>
